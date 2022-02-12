@@ -11,7 +11,7 @@ public final class PacketEventsTest extends JavaPlugin {
         // Plugin startup logic
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
         PacketEvents.getAPI().getSettings().bStats(true).checkForUpdates(false).debug(true);
-        PacketEvents.getAPI().load();
+        PacketEvents.getAPI().init();
 
         PacketEvents.getAPI().getEventManager().registerListener(new PacketListener());
     }
