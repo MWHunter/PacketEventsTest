@@ -1,8 +1,9 @@
 package me.defineoutside.packeteventstest;
 
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
-import com.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
-import com.github.retrooper.packetevents.event.impl.PacketSendEvent;
+import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.event.PacketSendEvent;
+import com.github.retrooper.packetevents.protocol.ConnectionState;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.handshaking.client.WrapperHandshakingClientHandshake;
 import com.github.retrooper.packetevents.wrapper.login.client.WrapperLoginClientEncryptionResponse;
@@ -159,6 +160,9 @@ public class PacketListener extends PacketListenerAbstract {
 
     @Override
     public void onPacketSend(PacketSendEvent event) {
+        if (event.getConnectionState() != ConnectionState.PLAY) return;
+        if (event.getPacketType() == null) return;
+        System.out.println("Sending " + event.getPacketType().getName());
         if (event.getPacketType() == PacketType.Login.Server.DISCONNECT) {
             WrapperLoginServerDisconnect wrapper = new WrapperLoginServerDisconnect(event);
         }
